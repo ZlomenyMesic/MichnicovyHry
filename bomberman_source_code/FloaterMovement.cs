@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Floater Movement
     internal class FloaterMovement
     {
         public static void ChangeDirection(ref GameObject floater, Direction currentDirection)
@@ -39,4 +40,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }

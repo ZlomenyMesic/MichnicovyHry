@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
-    #region Eric
-    public class GameObject : Microsoft.Xna.Framework.Game
+    #region Game Objects
+    public class GameObject
     {
         public Vector2 position;
         public Rectangle rectangle;

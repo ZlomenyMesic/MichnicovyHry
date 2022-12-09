@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Vector Math
     internal class VectorMath : Microsoft.Xna.Framework.Game
     {
-        #region VectorMath
         public static int CalculateBoardPosition(Vector2 vector)
         {
             // Convert XY window relative coordinates to a single number
@@ -51,6 +51,6 @@ namespace Bomberman
             int y = (boardPosition + 15 - (boardPosition % 15)) / 15;
             return new Vector2((x - 1) * 50, (y - 1) * 50 + 30);
         }
-        #endregion
     }
+    #endregion
 }

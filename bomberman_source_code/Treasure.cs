@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Bomberman
 {
+    #region Treasure
     public static class Treasure
     {
         public static int treasurePosition;
@@ -61,4 +62,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }

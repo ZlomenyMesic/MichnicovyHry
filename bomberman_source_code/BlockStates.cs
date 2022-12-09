@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Block State Checking
     internal class BlockStates
     {
-        #region BlockChecking
         public static bool IsFree(Vector2 vector)
         {
             // Check if the block at the given coordinates is empty
@@ -55,6 +55,6 @@ namespace Bomberman
             int num = Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)];
             return (num == 0) || (num == 3) || (num == 4) || (num == 5) || (num == 6);
         }
-        #endregion
     }
+    #endregion
 }

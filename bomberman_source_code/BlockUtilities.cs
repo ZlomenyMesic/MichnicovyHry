@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Block Helper
     public static class BlockUtilities
     {
         public static Texture2D GetBlockTypeTexture(BlockType blockType)
@@ -53,4 +54,5 @@ namespace Bomberman
         Bomb,
         Smoke
     }
+    #endregion
 }

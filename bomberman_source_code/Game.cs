@@ -10,6 +10,7 @@ using System.Threading;
 
 namespace Bomberman
 {
+    #region Main Game
     public class Game : Microsoft.Xna.Framework.Game
     {
         private GraphicsDeviceManager _graphics;
@@ -116,7 +117,7 @@ namespace Bomberman
                 this.Exit();
             }
 
-            KeyBinds.KeyboardMovePlayer(keyboardState, gameTime);
+            KeyBinds.KeyboardMovePlayer(keyboardState);
             KeyBinds.KeyboardPlaceBomb(keyboardState);
 
             // Floater updates
@@ -198,4 +199,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }

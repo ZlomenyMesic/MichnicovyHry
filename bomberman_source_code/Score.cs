@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Score
     static class Score
     {
         public static int score = 0;
@@ -37,4 +38,5 @@ namespace Bomberman
             return new Vector2(0, 0);
         }
     }
+    #endregion
 }

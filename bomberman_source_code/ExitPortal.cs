@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Bomberman
 {
+    #region Exit Portal
     public static class ExitPortal
     {
         public static int exitPortalPosition;
@@ -37,6 +38,8 @@ namespace Bomberman
 
         public static void PortalEntered()
         {
+            // TODO: Load another level
+
             if (exitPortalFound)
             {
                 exitPortalFound = true;
@@ -59,4 +62,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }

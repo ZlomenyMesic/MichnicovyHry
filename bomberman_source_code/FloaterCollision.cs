@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Floater Collisions
     internal static class FloaterCollision
     {
         public static void CheckForCollision(GameObject floater) 
@@ -25,4 +26,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }

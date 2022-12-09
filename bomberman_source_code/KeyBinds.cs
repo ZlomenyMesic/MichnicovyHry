@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Keyboard
     public static class KeyBinds
     {
-        #region KeyBinds
-        public static void KeyboardMovePlayer(KeyboardState keyboardState, GameTime gameTime)
+        public static void KeyboardMovePlayer(KeyboardState keyboardState)
         {
             // Move the player if the user presses a key
 
@@ -33,6 +33,6 @@ namespace Bomberman
                 Bomb.Place();
             }
         }
-        #endregion
     }
+    #endregion
 }

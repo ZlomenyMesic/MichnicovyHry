@@ -11,9 +11,9 @@ using System.Drawing.Text;
 
 namespace Bomberman
 {
+    #region Game Object Movement
     internal static class MoveGameObject
     {
-        #region Moving
         public static void Move(ref GameObject gameObject, Direction direction)
         {
             GetDirectionCoords(direction, out int move_X, out int move_Y, out int add_X1, out int addY1, out int addX2, out int addY2);
@@ -40,7 +40,6 @@ namespace Bomberman
                 FloaterMovement.ChangeDirection(ref gameObject, direction);
             }
         }
-        #endregion
 
         private static void GetDirectionCoords(Direction direction, out int move_X, out int move_Y, out int addX1, out int addY1, out int addX2, out int addY2)
         {
@@ -65,4 +64,5 @@ namespace Bomberman
         Left, 
         Right
     }
+    #endregion
 }

@@ -12,6 +12,7 @@ using System.IO;
 
 namespace Bomberman
 {
+    #region Bomb
     static class Bomb
     {
         private static int bombCountdown = -1;
@@ -162,4 +163,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }

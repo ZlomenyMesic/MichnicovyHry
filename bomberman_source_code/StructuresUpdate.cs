@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Bomberman
 {
+    #region Structure Updates
     internal static class StructuresUpdate
     {
         public static void UpdateTextures()
@@ -51,4 +52,5 @@ namespace Bomberman
             }
         }
     }
+    #endregion
 }
