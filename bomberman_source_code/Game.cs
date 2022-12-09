@@ -138,6 +138,14 @@ namespace Bomberman
             Bomb.CheckForDeath(ref floater1);
             Bomb.CheckForDeath(ref floater2);
 
+            // Structure updates (tresure and exit portal)
+
+            Treasure.CheckForPlayerCollision();
+            ExitPortal.CheckForPlayerCollision();
+
+            StructuresUpdate.UpdateTextures();
+            StructuresUpdate.UpdateBoardLayout();
+
             base.Update(gameTime);
         }
 
@@ -176,6 +184,11 @@ namespace Bomberman
             eric = new(new Vector2(600, 530), true);
             floater1 = new(new Vector2(150, 230), false);
             floater2 = new(new Vector2(550, 230), false);
+
+            // Generate a treasure and an exit portal
+
+            Treasure.GenerateTreasure();
+            ExitPortal.GenerateExitPortal();
 
             // Go through boardLayout, and create blocks matching to the numbers
 

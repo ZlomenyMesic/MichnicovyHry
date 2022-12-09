@@ -24,16 +24,10 @@ namespace Bomberman
             blockType = newBlockType;
         }
 
-        public void ClearBlock()
-        {
-            // Set the block to air
-
-            Game.boardLayout[VectorMath.CalculateBoardPosition(vector)] = 0;
-            blockType = BlockType.Air;
-        }
-
         public void ChangeType(BlockType newBlockType)
         {
+            // Change the block type
+
             blockType = newBlockType;
         }
     }

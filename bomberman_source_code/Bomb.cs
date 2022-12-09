@@ -97,6 +97,7 @@ namespace Bomberman
                         Game.gameBoard[position].ChangeType(BlockType.Smoke);
                         Game.boardLayout[position] = 4;
                     }
+                    break;
                 }
             }
         }
@@ -109,7 +110,7 @@ namespace Bomberman
             {
                 if (Game.boardLayout[index] == 4)
                 {
-                    Game.gameBoard[index].ClearBlock();
+                    Game.gameBoard[index].ChangeType(BlockType.Air);
                     Game.boardLayout[index] = 0;
                 }
             }
@@ -151,6 +152,7 @@ namespace Bomberman
             // Go through every smoke block, and check if the game object is touching it
 
             Vector2 gameObjectCoordinates = VectorMath.DivideVector(new Vector2(gameObject.position.X + 25, gameObject.position.Y + 25));
+            
             for (int index = 0; index < 165; index++)
             {
                 if ((Game.boardLayout[index] == 4) && (index == VectorMath.CalculateBoardRelativePosition(gameObjectCoordinates)))
