@@ -15,7 +15,6 @@ namespace Bomberman
     {
         public static int score = 0;
         public static string scoreBoard = "SCORE: 0";
-        private static Vector2 scoreBoardPosition;
 
         public static void Add(int amount)
         {

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharpDX.Direct2D1;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace Bomberman
 {
@@ -162,6 +163,12 @@ namespace Bomberman
                     gameObject.Kill();
                 }
             }
+        }
+
+        public static void ResetCountdowns()
+        {
+            bombCountdown = -1;
+            preventBombPlacement = false;
         }
     }
     #endregion

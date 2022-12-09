@@ -20,6 +20,9 @@ namespace Bomberman
 
         public static void GenerateExitPortal()
         {
+            exitPortalFound = false;
+            exitPortalLoadCheck = false;
+
             // List all the weak walls, then choose one and make it an exit portal
             // If the exit portal location matches treasure location, don't put it there
 

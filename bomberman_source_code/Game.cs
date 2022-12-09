@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Net.Mime;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -79,6 +80,7 @@ namespace Bomberman
             base.Initialize();
 
             Start();
+            LevelManager.LoadNewLevel(0);
         }
 
         protected override void LoadContent()
@@ -144,8 +146,8 @@ namespace Bomberman
             Treasure.CheckForPlayerCollision();
             ExitPortal.CheckForPlayerCollision();
 
-            StructuresUpdate.UpdateTextures();
-            StructuresUpdate.UpdateBoardLayout();
+            StructureUpdates.UpdateTextures();
+            StructureUpdates.UpdateBoardLayout();
 
             base.Update(gameTime);
         }
@@ -179,14 +181,9 @@ namespace Bomberman
             base.Draw(gameTime);
         }
 
-        public void Start()
+        public static void Start()
         {
             // Runs after loading the game window
-
-            eric = new(new Vector2(600, 530), true);
-            floater1 = new(new Vector2(150, 230), false);
-            floater2 = new(new Vector2(550, 230), false);
-
             // Generate a treasure and an exit portal
 
             Treasure.GenerateTreasure();
@@ -198,6 +195,27 @@ namespace Bomberman
             {
                 gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
             }
+        }
+
+        public static void Restart(bool playerDied)
+        {
+            /*Bomb.ResetCountdowns();
+
+            Treasure.treasureFound = true;
+            ExitPortal.exitPortalFound = true;
+
+            for (int index = 0; index < 165; index++)
+            {
+                boardLayout[index] = 0;
+                gameBoard[index].ChangeType(BlockType.Air);
+            }
+
+            boardLayout = LevelManager.LoadNewLevel(playerDied ? 0 : ++Score.score);
+
+            for (int index = 0; index < 165; index++)
+            {
+                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
+            }*/
         }
     }
     #endregion

@@ -20,6 +20,9 @@ namespace Bomberman
 
         public static void GenerateTreasure()
         {
+            treasureFound = false;
+            treasureLoadCheck = false;
+
             // List all the weak walls, then choose one and make it a treasure
 
             Random random = new Random();
