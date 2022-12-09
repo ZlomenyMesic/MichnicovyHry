@@ -15,9 +15,16 @@ namespace Bomberman
         #region VectorMath
         public static int CalculateBoardPosition(Vector2 vector)
         {
-            // Convert XY coordinates to a single number
+            // Convert XY window relative coordinates to a single number
 
             return (int)((((vector.Y / 50) - 1) * 15) + (vector.X / 50) - 1);
+        }
+
+        public static int CalculateBoardRelativePosition(Vector2 vector)
+        {
+            // Convert XY board relative coordinates to a single number
+
+            return (int)(((vector.Y - 1) * 15) + vector.X - 1);
         }
 
         public static Vector2 CalculateBoardVector(int boardPosition)
@@ -27,6 +34,13 @@ namespace Bomberman
             int x = (boardPosition % 15) + 1;
             int y = (boardPosition + 15 - (boardPosition % 15)) / 15;
             return new Vector2(x, y);
+        }
+
+        public static Vector2 DivideVector(Vector2 vector)
+        {
+            // Convert window relative coordinates to board relative coordinates
+
+            return new Vector2((int)(vector.X / 50) + 1, (int)((vector.Y - 30) / 50) + 1);
         }
 
         public static Vector2 CalculateActualVector(int boardPosition)

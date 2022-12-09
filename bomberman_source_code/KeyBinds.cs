@@ -13,14 +13,14 @@ namespace Bomberman
     public static class KeyBinds
     {
         #region KeyBinds
-        public static void KeyboardMovePlayer(KeyboardState keyboardState)
+        public static void KeyboardMovePlayer(KeyboardState keyboardState, GameTime gameTime)
         {
             // Move the player if the user presses a key
 
-            if (keyboardState.IsKeyDown(Keys.W)) { GameObjectMove.EricMoveUp(); }
-            if (keyboardState.IsKeyDown(Keys.A)) { GameObjectMove.EricMoveLeft(); }
-            if (keyboardState.IsKeyDown(Keys.S)) { GameObjectMove.EricMoveDown(); }
-            if (keyboardState.IsKeyDown(Keys.D)) { GameObjectMove.EricMoveRight(); }
+            if (keyboardState.IsKeyDown(Keys.W)) { MoveGameObject.Move(ref Game.eric, Direction.Up); }
+            if (keyboardState.IsKeyDown(Keys.A)) { MoveGameObject.Move(ref Game.eric, Direction.Left); }
+            if (keyboardState.IsKeyDown(Keys.S)) { MoveGameObject.Move(ref Game.eric, Direction.Down); }
+            if (keyboardState.IsKeyDown(Keys.D)) { MoveGameObject.Move(ref Game.eric, Direction.Right); }
 
         }
 
@@ -30,7 +30,7 @@ namespace Bomberman
 
             if (keyboardState.IsKeyDown(Keys.B))
             {
-                //Bomb.Place();
+                Bomb.Place();
             }
         }
         #endregion

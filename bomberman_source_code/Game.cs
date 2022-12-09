@@ -43,13 +43,19 @@ namespace Bomberman
         public static Texture2D textureTreasure;
         public static Texture2D textureExitPortal;
         public static Texture2D ericTexture;
+        public static Texture2D floaterTexture;
+        public static Texture2D bombTexture;
+        public static Texture2D smokeTexture;
 
         public SpriteFont mainFont;
 
         private KeyboardState keyboardState;
 
-        public static Eric eric;
+        public static GameObject eric;
+        public static GameObject floater1;
+        public static GameObject floater2;
 
+        public static int FramesPerSecond = 80;
 
         public Game()
         {
@@ -84,14 +90,24 @@ namespace Bomberman
             textureWeakWall = Content.Load<Texture2D>("WeakWall");
             textureTreasure = Content.Load<Texture2D>("Treasure");
             textureExitPortal = Content.Load<Texture2D>("Exit");
+
             ericTexture = Content.Load<Texture2D>("Eric");
+            floaterTexture = Content.Load<Texture2D>("Floater");
+
+            bombTexture = Content.Load<Texture2D>("Bomb");
+            smokeTexture = Content.Load<Texture2D>("Explosion");
 
             mainFont = Content.Load<SpriteFont>("MainFont");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            // Update the game at 60 FPS
+            // Update the game at 80 FPS
+
+            IsFixedTimeStep = true;
+            TargetElapsedTime = TimeSpan.FromSeconds(1d / FramesPerSecond);
+
+            // Get the keyboard input
 
             keyboardState = Keyboard.GetState();
 
@@ -100,8 +116,27 @@ namespace Bomberman
                 this.Exit();
             }
 
-            KeyBinds.KeyboardMovePlayer(keyboardState);
+            KeyBinds.KeyboardMovePlayer(keyboardState, gameTime);
             KeyBinds.KeyboardPlaceBomb(keyboardState);
+
+            // Floater updates
+
+            MoveGameObject.Move(ref floater1, floater1.direction);
+            MoveGameObject.Move(ref floater2, floater2.direction);
+
+            FloaterMovement.RandomDirectionChange(ref floater1);
+            FloaterMovement.RandomDirectionChange(ref floater2);
+
+            FloaterCollision.CheckForCollision(floater1);
+            FloaterCollision.CheckForCollision(floater2);
+
+            // Bomb updates
+
+            Bomb.BombCountdown();
+
+            Bomb.CheckForDeath(ref eric);
+            Bomb.CheckForDeath(ref floater1);
+            Bomb.CheckForDeath(ref floater2);
 
             base.Update(gameTime);
         }
@@ -116,17 +151,19 @@ namespace Bomberman
 
             foreach (Block block in gameBoard)
             {
-                if (BlockHelper.GetBlockTypeTexture(block.blockType) != null)
+                if (BlockUtilities.GetBlockTypeTexture(block.blockType) != null)
                 {
-                    _spriteBatch.Draw(BlockHelper.GetBlockTypeTexture(block.blockType), new Rectangle(new Point((int)block.vector.X, (int)block.vector.Y), new Point(50, 50)), Color.White);
+                    _spriteBatch.Draw(BlockUtilities.GetBlockTypeTexture(block.blockType), new Rectangle(new Point((int)block.vector.X, (int)block.vector.Y), new Point(50, 50)), Color.White);
                 }
             }
 
             // Draw Eric and the floaters
 
-            _spriteBatch.Draw(ericTexture, eric.rectangle, Color.White);
+            _spriteBatch.Draw(eric.texture, eric.rectangle, Color.White);
+            _spriteBatch.Draw(floater1.texture, floater1.rectangle, Color.White);
+            _spriteBatch.Draw(floater2.texture, floater2.rectangle, Color.White);
 
-            _spriteBatch.DrawString(mainFont, Score.scoreText, new Vector2(330, 5), Color.White);
+            _spriteBatch.DrawString(mainFont, Score.scoreBoard, Score.CalculateScoreBoardPosition(), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -136,13 +173,15 @@ namespace Bomberman
         {
             // Runs after loading the game window
 
-            eric = new(new Vector2(600, 530));
+            eric = new(new Vector2(600, 530), true);
+            floater1 = new(new Vector2(150, 230), false);
+            floater2 = new(new Vector2(550, 230), false);
 
             // Go through boardLayout, and create blocks matching to the numbers
 
             for (int index = 0; index < 165; index++)
             {
-                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockHelper.ConvertToBlockType(boardLayout[index]));
+                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
             }
         }
     }
