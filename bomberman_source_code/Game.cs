@@ -56,7 +56,7 @@ namespace Bomberman
         public static GameObject floater1;
         public static GameObject floater2;
 
-        public static int FramesPerSecond = 80;
+        public static int FramesPerSecond = 100;
 
         public Game()
         {
@@ -103,7 +103,7 @@ namespace Bomberman
 
         protected override void Update(GameTime gameTime)
         {
-            // Update the game at 80 FPS
+            // Update the game at 100 FPS
 
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1d / FramesPerSecond);
@@ -173,6 +173,7 @@ namespace Bomberman
             _spriteBatch.Draw(floater2.texture, floater2.rectangle, Color.White);
 
             _spriteBatch.DrawString(mainFont, Score.scoreBoard, Score.CalculateScoreBoardPosition(), Color.White);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);

@@ -55,7 +55,7 @@ namespace Bomberman
 
             for (int index = 0; index < 165; index++)
             {
-                if ((Game.boardLayout[index] == 5) && (index == VectorMath.CalculateBoardRelativePosition(gameObjectCoordinates)))
+                if ((Game.boardLayout[index] == 6) && (index == VectorMath.CalculateBoardRelativePosition(gameObjectCoordinates)))
                 {
                     ExitPortal.PortalEntered();
                 }

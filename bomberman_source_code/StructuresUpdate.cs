@@ -47,7 +47,7 @@ namespace Bomberman
 
             if (ExitPortal.exitPortalLoadCheck)
             {
-                Game.boardLayout[ExitPortal.exitPortalPosition] = 5;
+                Game.boardLayout[ExitPortal.exitPortalPosition] = 6;
                 ExitPortal.exitPortalLoadCheck = false;
             }
         }

@@ -24,9 +24,10 @@ namespace Bomberman
 
             Vector2 ericCoords = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
 
-            if (!BlockStates.IsOutOfRange(ericCoords) && BlockStates.IsFree(ericCoords) && !BlockStates.IsBomb(ericCoords) && (bombCountdown == -1))
+            if (!BlockStates.IsOutOfRange(ericCoords) && BlockStates.IsFree(ericCoords) && !BlockStates.IsBomb(ericCoords) && (bombCountdown == -1) 
+                && (!Game.boardLayout.Contains(3)) && (!Game.boardLayout.Contains(4)))
             {
-                bombCountdown = 165;
+                bombCountdown = 200;
                 Game.boardLayout[VectorMath.CalculateBoardRelativePosition(ericCoords)] = 3;
                 Game.gameBoard[VectorMath.CalculateBoardRelativePosition(ericCoords)].ChangeType(BlockType.Bomb);
             }
@@ -119,7 +120,7 @@ namespace Bomberman
 
         public static void BombCountdown()
         {
-            // Runs 80 times per second
+            // Runs 100 times per second
             // bombCheck is -1 if there is no bomb
 
             if (Game.boardLayout.Contains(4))
