@@ -37,8 +37,6 @@ namespace Bomberman
 
         public static void PortalEntered()
         {
-            // Erase the treasure and add score 500
-
             if (exitPortalFound)
             {
                 exitPortalFound = true;
