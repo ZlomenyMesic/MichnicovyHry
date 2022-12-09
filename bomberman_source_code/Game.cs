@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Net.Mime;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -115,9 +116,9 @@ namespace Bomberman
 
             foreach (Block block in gameBoard)
             {
-                if (GetBlockTypeTexture(block.blockType) != null)
+                if (BlockHelper.GetBlockTypeTexture(block.blockType) != null)
                 {
-                    _spriteBatch.Draw(GetBlockTypeTexture(block.blockType), new Rectangle(new Point((int)block.vector.X, (int)block.vector.Y), new Point(50, 50)), Color.White);
+                    _spriteBatch.Draw(BlockHelper.GetBlockTypeTexture(block.blockType), new Rectangle(new Point((int)block.vector.X, (int)block.vector.Y), new Point(50, 50)), Color.White);
                 }
             }
 
@@ -125,7 +126,7 @@ namespace Bomberman
 
             _spriteBatch.Draw(ericTexture, eric.rectangle, Color.White);
 
-            _spriteBatch.DrawString(mainFont, "SCORE: 0", new Vector2(330, 5), Color.White);
+            _spriteBatch.DrawString(mainFont, Score.scoreText, new Vector2(330, 5), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -141,102 +142,8 @@ namespace Bomberman
 
             for (int index = 0; index < 165; index++)
             {
-                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), ConvertToBlockType(boardLayout[index]));
-            }
-        }
-
-        #region Block
-        public static Texture2D GetBlockTypeTexture(BlockType blockType)
-        {
-            // Return block textures from a BlockType
-
-            switch (blockType)
-            {
-                case BlockType.Air: return null;
-                case BlockType.Wall: return textureWall;
-                case BlockType.WeakWall: return textureWeakWall;
-                case BlockType.Treasure: return textureTreasure;
-                case BlockType.ExitPortal: return textureExitPortal;
-                default: return null;
-            }
-        }
-
-        public BlockType ConvertToBlockType(int number)
-        {
-            // Convert numbers to a BlockType
-
-            switch (number)
-            {
-                case 0: return BlockType.Air;
-                case 1: return BlockType.Wall;
-                case 2: return BlockType.WeakWall;
-                case 3: return BlockType.Treasure;
-                case 4: return BlockType.ExitPortal;
-                default: return BlockType.Air;
+                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockHelper.ConvertToBlockType(boardLayout[index]));
             }
         }
     }
-
-    public class Block
-    {
-        public Vector2 vector;
-        public BlockType blockType;
-
-        public Block(Vector2 newVector, BlockType newBlockType)
-        {
-            // Block constructor, create a new block
-
-            vector = newVector;
-            blockType = newBlockType;
-        }
-
-        public void ClearBlock()
-        {
-            // Set the block to air
-
-            Game.boardLayout[VectorMath.CalculateBoardPosition(vector)] = 0;
-            blockType = BlockType.Air;
-        }
-    }
-
-    public enum BlockType
-    {
-        Air,
-        Wall,
-        WeakWall,
-        Treasure,
-        ExitPortal
-    }
-    #endregion
-
-    #region Eric
-    public class Eric : Microsoft.Xna.Framework.Game
-    {
-        public Vector2 position;
-        public Rectangle rectangle;
-
-        public Eric(Vector2 startPos)
-        {
-            // Eric constructor, create Eric
-
-            position = startPos;
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 50, 50);
-        }
-
-        public void MoveTo(Vector2 newPos)
-        {
-            // Move Eric to a new location
-
-            position = newPos;
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 50, 50);
-        }
-
-        public void Kill()
-        {
-            // Kill Eric
-
-            Game.ericTexture.Dispose();
-        }
-    }
-    #endregion
 }
