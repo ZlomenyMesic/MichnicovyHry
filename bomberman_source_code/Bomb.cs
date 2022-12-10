@@ -55,40 +55,32 @@ namespace Bomberman
             for (int index = (int)bombPos.X - 1; index > bombPos.X - 3; index--)
             {
                 if (BlockStates.CanExplode(new Vector2(index, bombPos.Y)))
-                {
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(index, bombPos.Y)));
-                }
-                else { break; }
+                else break;
             }
 
             // 2 blocks right
             for (int index = (int)bombPos.X + 1; index < bombPos.X + 3; index++)
             {
                 if (BlockStates.CanExplode(new Vector2(index, bombPos.Y)))
-                {
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(index, bombPos.Y)));
-                }
-                else { break; }
+                else break;
             }
 
             // 2 blocks up
             for (int index = (int)bombPos.Y - 1; index > bombPos.Y - 3; index--)
             {
                 if (BlockStates.CanExplode(new Vector2(bombPos.X, index)))
-                {
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(bombPos.X, index)));
-                }
-                else { break; }
+                else break;
             }
 
             // 2 blocks down
             for (int index = (int)bombPos.Y + 1; index < bombPos.Y + 3; index++)
             {
                 if (BlockStates.CanExplode(new Vector2(bombPos.X, index)))
-                {
                     destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(new Vector2(bombPos.X, index)));
-                }
-                else { break; }
+                else break;
             }
 
             destructableBlocks.Add(VectorMath.CalculateBoardRelativePosition(bombPos));
@@ -150,7 +142,7 @@ namespace Bomberman
                     preventBombPlacement = true;
                     bombCountdown = 60;
                 }
-                else { bombCountdown--; }
+                else bombCountdown--;
 
                 if (bombCountdown == 0)
                 {
@@ -162,8 +154,11 @@ namespace Bomberman
             {
                 // If a bomb is placed, count down from 200 and then explode
 
-                if (bombCountdown != -1) { bombCountdown--; }
-                if (bombCountdown == 0) { Explosion(); }
+                if (bombCountdown != -1) 
+                    bombCountdown--;
+
+                if (bombCountdown == 0) 
+                    Explosion();
             }
         }
 
@@ -176,12 +171,8 @@ namespace Bomberman
             Vector2 gameObjectCoordinates = VectorMath.DivideVector(new Vector2(gameObject.position.X + 25, gameObject.position.Y + 25));
             
             for (int index = 0; index < 165; index++)
-            {
                 if ((Game.boardLayout[index] == 4) && (index == VectorMath.CalculateBoardRelativePosition(gameObjectCoordinates)))
-                {
                     gameObject.Kill();
-                }
-            }
         }
 
         /// <summary>

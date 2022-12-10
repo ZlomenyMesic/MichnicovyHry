@@ -37,9 +37,7 @@ namespace Bomberman
         public static void RandomDirectionChange(ref GameObject floater)
         {
             if (new Random().Next(0, 200) == 1)
-            {
                 ChangeDirection(ref floater, floater.direction);
-            }
         }
     }
     #endregion

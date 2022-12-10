@@ -20,6 +20,7 @@ namespace Bomberman
 
         /// <summary>
         /// List all weak walls, then choose one and hide the exit portal inside
+        /// Also prevents hiding the exit portal in the same block as the treasure
         /// </summary>
         public static void GenerateExitPortal()
         {
@@ -29,14 +30,9 @@ namespace Bomberman
             List<int> possibleBlocks = new List<int>();
 
             for (int index = 0; index < 165; index++)
-            {
-                // Prevent hiding the exit portal at the same block as the treasure
-
                 if ((Game.boardLayout[index] == 2) && (index != Treasure.treasurePosition))
-                {
                     possibleBlocks.Add(index);
-                }
-            }
+
             exitPortalPosition = possibleBlocks[new Random().Next(0, possibleBlocks.Count - 1)];
         }
 
@@ -45,12 +41,11 @@ namespace Bomberman
         /// </summary>
         public static void PortalEntered()
         {
-            // TODO: Load another level
-
-            if (exitPortalFound)
+            if (!exitPortalFound)
             {
                 exitPortalFound = true;
                 Game.gameBoard[exitPortalPosition].ChangeType(BlockType.Air);
+                Game.Restart(newLevel: true);
             }
         }
 
@@ -61,15 +56,11 @@ namespace Bomberman
         {
             Vector2 ericCoordinates = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
 
-            for (int index = 0; index < 165; index++)
-            {
-                // If the player is standing at the same block as the treasure, call ExitPortal.PortalEntered()
+            // If the player is standing at the same block as the treasure, call ExitPortal.PortalEntered()
 
+            for (int index = 0; index < 165; index++)
                 if ((Game.boardLayout[index] == 6) && (index == VectorMath.CalculateBoardRelativePosition(ericCoordinates)))
-                {
                     ExitPortal.PortalEntered();
-                }
-            }
         }
     }
     #endregion

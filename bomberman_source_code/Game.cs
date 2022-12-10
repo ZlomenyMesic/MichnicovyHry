@@ -27,17 +27,7 @@ namespace Bomberman
          * 6 = loaded exit portal
          */
 
-        public static int[] boardLayout; /*= { 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
- 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
- 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
- 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
- 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
- 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
- 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
- 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
- 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
- 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
- 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0 };*/
+        public static int[] boardLayout = new int[165];
         public static Block[] gameBoard = new Block[165];
 
         public static Texture2D textureWall;
@@ -79,7 +69,8 @@ namespace Bomberman
 
             base.Initialize();
 
-            boardLayout = LevelManager.LoadNewLevel(0);
+            BlockUtilities.LoadBoardLayout(level: 0);
+
             Start();
         }
 
@@ -103,21 +94,20 @@ namespace Bomberman
             mainFont = Content.Load<SpriteFont>("MainFont");
         }
 
+        /// <summary>
+        /// Update the game at 100 FPS
+        /// </summary>
+        /// <param name="gameTime">Time since the last update</param>
         protected override void Update(GameTime gameTime)
         {
-            // Update the game at 100 FPS
-
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1d / FramesPerSecond);
 
-            // Get the keyboard input
+            // Keyboard updates
 
             keyboardState = Keyboard.GetState();
-
             if (keyboardState.IsKeyDown(Keys.Escape))
-            {
                 this.Exit();
-            }
 
             KeyBinds.KeyboardMovePlayer(keyboardState);
             KeyBinds.KeyboardPlaceBomb(keyboardState);
@@ -152,6 +142,10 @@ namespace Bomberman
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draw all blocks and game objects on the game window
+        /// </summary>
+        /// <param name="gameTime">Time since the last draw</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -161,18 +155,16 @@ namespace Bomberman
             // Go through every block and draw it
 
             foreach (Block block in gameBoard)
-            {
                 if (BlockUtilities.GetBlockTypeTexture(block.blockType) != null)
-                {
                     _spriteBatch.Draw(BlockUtilities.GetBlockTypeTexture(block.blockType), new Rectangle(new Point((int)block.vector.X, (int)block.vector.Y), new Point(50, 50)), Color.White);
-                }
-            }
 
             // Draw Eric and the floaters
 
             _spriteBatch.Draw(eric.texture, eric.rectangle, Color.White);
             _spriteBatch.Draw(floater1.texture, floater1.rectangle, Color.White);
             _spriteBatch.Draw(floater2.texture, floater2.rectangle, Color.White);
+
+            // Draw the scoreboard
 
             _spriteBatch.DrawString(mainFont, Score.scoreboard, Score.CalculateScoreBoardPosition(), Color.White);
 
@@ -181,45 +173,52 @@ namespace Bomberman
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Actions after loading the game window
+        /// </summary>
         public static void Start()
         {
-            // Runs after loading the game window
-            // Generate a treasure and an exit portal
+            // Load some important stuff
 
+            LevelManager.LoadNewStartPositions(0);
             Treasure.GenerateTreasure();
             ExitPortal.GenerateExitPortal();
-
-            // Go through boardLayout, and create blocks matching to the numbers
-
-            for (int index = 0; index < 165; index++)
-            {
-                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
-            }
+            BlockUtilities.UpdateAllTextures();
         }
 
-        public static void Restart(bool playerDied)
+        /// <summary>
+        /// Reset all variables and timers, then either go to level 0 or load a new level
+        /// </summary>
+        /// <param name="newLevel">true if a new level should be loaded, false to go back to level 0</param>
+        public static void Restart(bool newLevel)
         {
-            Bomb.ResetCountdowns();
-
-            Treasure.treasureFound = true;
-            ExitPortal.exitPortalFound = true;
-
-            for (int index = 0; index < 165; index++)
+            if (LevelManager.preventMultipleRestarts)
             {
-                gameBoard[index].ChangeType(BlockType.Air);
+                LevelManager.preventMultipleRestarts = false;
+
+                LevelManager.level = newLevel ? ++LevelManager.level : 0;
+
+                Bomb.ResetCountdowns();
+
+                // Prevent loading the treasure and the exit portal
+
+                Treasure.treasureFound = true;
+                ExitPortal.exitPortalFound = true;
+
+                // Load the new starting positions for the player and the floaters
+
+                LevelManager.LoadNewStartPositions(newLevel ? LevelManager.level : 0);
+
+                // Update the board and the textures
+
+                BlockUtilities.LoadBoardLayout(newLevel ? LevelManager.level : 0);
+                BlockUtilities.UpdateAllTextures();
+
+                // Generate a new treasure and a new exit portal
+
+                Treasure.GenerateTreasure();
+                ExitPortal.GenerateExitPortal();
             }
-
-            boardLayout = LevelManager.LoadNewLevel(playerDied ? 0 : ++LevelManager.level);
-
-            foreach (int i in boardLayout)
-            {
-                Console.Write($"{i} ");
-            }
-
-            //for (int index = 0; index < 165; index++)
-            //{
-            //    gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
-            //}
         }
     }
     #endregion

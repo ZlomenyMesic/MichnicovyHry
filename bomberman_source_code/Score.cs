@@ -52,8 +52,7 @@ namespace Bomberman
             if (scoreLength == 1) { return new Vector2(330, 5); }
             else if (scoreLength == 3) { return new Vector2(320, 5); }
             else if (scoreLength == 4) { return new Vector2(315, 5); }
-
-            return new Vector2(0, 0);
+            else return new Vector2(0, 0);
         }
     }
     #endregion

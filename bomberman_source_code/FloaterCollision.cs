@@ -24,9 +24,7 @@ namespace Bomberman
             int distance = (int)Vector2.Distance(new Vector2(Game.eric.position.X, Game.eric.position.Y), new Vector2(floater.position.X, floater.position.Y));
 
             if (distance < 30)
-            {
                 Game.eric.Kill();
-            }
         }
     }
     #endregion

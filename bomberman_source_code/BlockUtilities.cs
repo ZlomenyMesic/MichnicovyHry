@@ -25,10 +25,10 @@ namespace Bomberman
                 case BlockType.Air: return null;
                 case BlockType.Wall: return Game.textureWall;
                 case BlockType.WeakWall: return Game.textureWeakWall;
-                case BlockType.Treasure: return Game.textureTreasure;
-                case BlockType.ExitPortal: return Game.textureExitPortal;
                 case BlockType.Bomb: return Game.bombTexture;
                 case BlockType.Smoke: return Game.smokeTexture;
+                case BlockType.Treasure: return Game.textureTreasure;
+                case BlockType.ExitPortal: return Game.textureExitPortal;
                 default: return null;
             }
         }
@@ -40,8 +40,27 @@ namespace Bomberman
         /// <returns>BlockType matching the given ID</returns>
         public static BlockType ConvertToBlockType(int number)
         {
-            BlockType[] blockTypes = { BlockType.Air, BlockType.Wall, BlockType.WeakWall, BlockType.Treasure, BlockType.ExitPortal, BlockType.Bomb, BlockType.Smoke };
+            BlockType[] blockTypes = { BlockType.Air, BlockType.Wall, BlockType.WeakWall, BlockType.Bomb, BlockType.Smoke, BlockType.Treasure, BlockType.ExitPortal };
             return blockTypes[number];
+        }
+
+        /// <summary>
+        /// Update all of the block textures
+        /// </summary>
+        public static void UpdateAllTextures()
+        {
+            for (int index = 0; index < 165; index++)
+                Game.gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), ConvertToBlockType(Game.boardLayout[index]));
+        }
+
+        /// <summary>
+        /// Set the boardLayout to the given level
+        /// </summary>
+        /// <param name="level">Next level</param>
+        public static void LoadBoardLayout(int level)
+        {
+            for (int index = 0; index < 165; index++)
+                Game.boardLayout[index] = LevelManager.levels[level][index];
         }
     }
 
@@ -50,10 +69,10 @@ namespace Bomberman
         Air,
         Wall,
         WeakWall,
+        Bomb,
+        Smoke,
         Treasure,
         ExitPortal,
-        Bomb,
-        Smoke
     }
     #endregion
 }

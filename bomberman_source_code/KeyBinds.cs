@@ -33,9 +33,7 @@ namespace Bomberman
         public static void KeyboardPlaceBomb(KeyboardState keyboardState)
         {
             if (keyboardState.IsKeyDown(Keys.B))
-            {
                 Bomb.Place();
-            }
         }
     }
     #endregion

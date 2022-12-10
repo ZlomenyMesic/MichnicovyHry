@@ -31,12 +31,8 @@ namespace Bomberman
             // List all weak walls
 
             for (int index = 0; index < 165; index++)
-            {
                 if (Game.boardLayout[index] == 2)
-                {
                     possibleBlocks.Add(index);
-                }
-            }
 
             // Choose a random one
 
@@ -63,15 +59,11 @@ namespace Bomberman
         {
             Vector2 ericCoordinates = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
 
-            for (int index = 0; index < 165; index++)
-            {
-                // If the player is standing at the same block as the treasure, call Treasure.Collected()
+            // If the player is standing at the same block as the treasure, call Treasure.Collected()
 
+            for (int index = 0; index < 165; index++)
                 if ((Game.boardLayout[index] == 5) && (index == VectorMath.CalculateBoardRelativePosition(ericCoordinates)))
-                {
                     Treasure.Collected();
-                }
-            }
         }
     }
     #endregion
