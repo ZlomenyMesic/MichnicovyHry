@@ -16,18 +16,23 @@ namespace Bomberman
         public Vector2 vector;
         public BlockType blockType;
 
+        /// <summary>
+        /// Create a new block
+        /// </summary>
+        /// <param name="newVector">XY window-relative coordinates, top lelft corner</param>
+        /// <param name="newBlockType">The block type</param>
         public Block(Vector2 newVector, BlockType newBlockType)
         {
-            // Block constructor, create a new block
-
             vector = newVector;
             blockType = newBlockType;
         }
 
+        /// <summary>
+        /// Change the block type
+        /// </summary>
+        /// <param name="newBlockType">The new block type/param>
         public void ChangeType(BlockType newBlockType)
         {
-            // Change the block type
-
             blockType = newBlockType;
         }
     }

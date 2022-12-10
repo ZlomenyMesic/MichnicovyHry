@@ -54,41 +54,50 @@ namespace Bomberman
  2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2 }
 
         };
+        public static bool preventMultipleRestarts = true;
 
         public static void Death(bool player)
         {
             Score.Add(player ? 0 : 250);
 
-            if (player) 
+            if (player && preventMultipleRestarts) 
             {
-                Game.Restart(true); 
+                preventMultipleRestarts= false;
+                Console.WriteLine("death ok");
+                Game.Restart(true);
             }
         }
 
         public static int[] LoadNewLevel(int newLevel)
         {
+            Console.WriteLine($"{newLevel}");
             if (newLevel == 0)
             {
+                Console.WriteLine("OK");
                 Game.eric = new(new Vector2(600, 530), true);
                 Game.floater1 = new(new Vector2(150, 230), false);
                 Game.floater2 = new(new Vector2(550, 230), false);
-                return levels[newLevel];
+                return levels[0];
             }
             else if (newLevel == 1)
             {
                 Game.eric = new(new Vector2(600, 530), true);
                 Game.floater1 = new(new Vector2(200, 280), false);
                 Game.floater2 = new(new Vector2(500, 280), false);
-                return levels[newLevel];
+                return levels[1];
             }
             else if (newLevel == 2)
             {
                 Game.eric = new(new Vector2(600, 530), true);
                 Game.floater1 = new(new Vector2(350, 30), false);
                 Game.floater2 = new(new Vector2(350, 430), false);
-                return levels[newLevel];
+                return levels[2];
             }
-            return levels[5];
+            else
+            {
+                Console.WriteLine("NOT OK");
+                return levels[2];
+            }
         }
     }
     #endregion

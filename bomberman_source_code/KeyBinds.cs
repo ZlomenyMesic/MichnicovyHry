@@ -13,10 +13,12 @@ namespace Bomberman
     #region Keyboard
     public static class KeyBinds
     {
+        /// <summary>
+        /// Move the player if the keys WASD are pressed
+        /// </summary>
+        /// <param name="keyboardState">Actual keyboard state</param>
         public static void KeyboardMovePlayer(KeyboardState keyboardState)
         {
-            // Move the player if the user presses a key
-
             if (keyboardState.IsKeyDown(Keys.W)) { MoveGameObject.Move(ref Game.eric, Direction.Up); }
             if (keyboardState.IsKeyDown(Keys.A)) { MoveGameObject.Move(ref Game.eric, Direction.Left); }
             if (keyboardState.IsKeyDown(Keys.S)) { MoveGameObject.Move(ref Game.eric, Direction.Down); }
@@ -24,10 +26,12 @@ namespace Bomberman
 
         }
 
+        /// <summary>
+        /// Place a bomb if the key B is pressed
+        /// </summary>
+        /// <param name="keyboardState">The actual keyboard state</param>
         public static void KeyboardPlaceBomb(KeyboardState keyboardState)
         {
-            // Place a bomb if the user pressed key B
-
             if (keyboardState.IsKeyDown(Keys.B))
             {
                 Bomb.Place();

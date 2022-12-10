@@ -18,15 +18,17 @@ namespace Bomberman
         public static bool treasureFound = false;
         public static bool treasureLoadCheck = false;
 
+        /// <summary>
+        /// List all weak walls, then choose one and hide the treasure inside
+        /// </summary>
         public static void GenerateTreasure()
         {
             treasureFound = false;
             treasureLoadCheck = false;
 
-            // List all the weak walls, then choose one and make it a treasure
-
-            Random random = new Random();
             List<int> possibleBlocks = new List<int>();
+
+            // List all weak walls
 
             for (int index = 0; index < 165; index++)
             {
@@ -35,13 +37,17 @@ namespace Bomberman
                     possibleBlocks.Add(index);
                 }
             }
-            treasurePosition = possibleBlocks[random.Next(0, possibleBlocks.Count - 1)];
+
+            // Choose a random one
+
+            treasurePosition = possibleBlocks[new Random().Next(0, possibleBlocks.Count - 1)];
         }
 
+        /// <summary>
+        /// Erase the treasure and add score 500 to the player
+        /// </summary>
         public static void Collected()
         {
-            // Erase the treasure and add score 500
-
             if (!treasureFound)
             {
                 treasureFound = true;
@@ -50,15 +56,18 @@ namespace Bomberman
             }
         }
 
+        /// <summary>
+        /// Check if the player is touching the treasure
+        /// </summary>
         public static void CheckForPlayerCollision()
         {
-            // Check if the player is touching the treasure
-
-            Vector2 gameObjectCoordinates = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
+            Vector2 ericCoordinates = VectorMath.DivideVector(new Vector2(Game.eric.position.X + 25, Game.eric.position.Y + 25));
 
             for (int index = 0; index < 165; index++)
             {
-                if ((Game.boardLayout[index] == 5) && (index == VectorMath.CalculateBoardRelativePosition(gameObjectCoordinates)))
+                // If the player is standing at the same block as the treasure, call Treasure.Collected()
+
+                if ((Game.boardLayout[index] == 5) && (index == VectorMath.CalculateBoardRelativePosition(ericCoordinates)))
                 {
                     Treasure.Collected();
                 }

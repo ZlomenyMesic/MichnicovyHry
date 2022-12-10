@@ -27,7 +27,7 @@ namespace Bomberman
          * 6 = loaded exit portal
          */
 
-        public static int[] boardLayout = { 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
+        public static int[] boardLayout; /*= { 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
  0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
  0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
  2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
@@ -37,7 +37,7 @@ namespace Bomberman
  2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2,
  0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0,
  0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
- 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0 };
+ 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0 };*/
         public static Block[] gameBoard = new Block[165];
 
         public static Texture2D textureWall;
@@ -79,8 +79,8 @@ namespace Bomberman
 
             base.Initialize();
 
+            boardLayout = LevelManager.LoadNewLevel(0);
             Start();
-            LevelManager.LoadNewLevel(0);
         }
 
         protected override void LoadContent()
@@ -174,7 +174,7 @@ namespace Bomberman
             _spriteBatch.Draw(floater1.texture, floater1.rectangle, Color.White);
             _spriteBatch.Draw(floater2.texture, floater2.rectangle, Color.White);
 
-            _spriteBatch.DrawString(mainFont, Score.scoreBoard, Score.CalculateScoreBoardPosition(), Color.White);
+            _spriteBatch.DrawString(mainFont, Score.scoreboard, Score.CalculateScoreBoardPosition(), Color.White);
 
             _spriteBatch.End();
 
@@ -199,23 +199,27 @@ namespace Bomberman
 
         public static void Restart(bool playerDied)
         {
-            /*Bomb.ResetCountdowns();
+            Bomb.ResetCountdowns();
 
             Treasure.treasureFound = true;
             ExitPortal.exitPortalFound = true;
 
             for (int index = 0; index < 165; index++)
             {
-                boardLayout[index] = 0;
                 gameBoard[index].ChangeType(BlockType.Air);
             }
 
-            boardLayout = LevelManager.LoadNewLevel(playerDied ? 0 : ++Score.score);
+            boardLayout = LevelManager.LoadNewLevel(playerDied ? 0 : ++LevelManager.level);
 
-            for (int index = 0; index < 165; index++)
+            foreach (int i in boardLayout)
             {
-                gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
-            }*/
+                Console.Write($"{i} ");
+            }
+
+            //for (int index = 0; index < 165; index++)
+            //{
+            //    gameBoard[index] = new Block(VectorMath.CalculateActualVector(index), BlockUtilities.ConvertToBlockType(boardLayout[index]));
+            //}
         }
     }
     #endregion

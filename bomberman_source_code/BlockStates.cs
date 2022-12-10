@@ -13,45 +13,63 @@ namespace Bomberman
     #region Block State Checking
     internal class BlockStates
     {
+        /// <summary>
+        /// Check if the block at the given coordinates is empty
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinates</param>
+        /// <returns>true if the block is empty, otherwise false</returns>
         public static bool IsFree(Vector2 vector)
         {
-            // Check if the block at the given coordinates is empty
-
             return Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)] == 0 ;
         }
 
+        /// <summary>
+        /// Check if the block at the given coordinates is outside the window borders
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinates</param>
+        /// <returns>true if the block is out of range, otherwise false</returns>
         public static bool IsOutOfRange(Vector2 vector)
         {
-            // Check if the given coordinates are outside the board
-
             return (vector.X > 15) || (vector.X < 1) || (vector.Y > 11) || (vector.Y < 1);
         }
 
+        /// <summary>
+        /// Check if the block at the given coordinates is a bomb
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinates</param>
+        /// <returns>true if the block is a bomb, otherwise false</returns>
         public static bool IsBomb(Vector2 vector)
         {
-            // Check if the block at the given coordinates is a bomb
-
             return Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)] == 3;
         }
 
+        /// <summary>
+        /// Check if the block at the given coordinates is a weak wall
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinates</param>
+        /// <returns>true if the block is a weak wall, otherwise false</returns>
         public static bool IsDestructable(Vector2 vector)
         {
-            // Check if the block at the given coordinates is a weak brick
-
             return Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)] == 2;
         }
 
+        /// <summary>
+        /// Check if the block at the given coordinates can explode
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinate</param>
+        /// <returns>true if the block can explode, otherwise false</returns>
         public static bool CanExplode(Vector2 vector)
         {
-            // Check if the block at the given coordinates can be exploded
-
             return !IsOutOfRange(vector) && (IsFree(vector) || IsDestructable(vector));
         }
 
+        /// <summary>
+        /// Check if it's possible to walk through the block at the given coordinates
+        /// </summary>
+        /// <param name="vector">XY board-relative coordinates</param>
+        /// <returns>true if it can be walked through, otherwise false</returns>
         public static bool CanBeWalkedThrough(Vector2 vector)
         {
-            // Check if the block at the given coordinates isn't a wall
-
             int num = Game.boardLayout[VectorMath.CalculateBoardRelativePosition(vector)];
             return (num == 0) || (num == 3) || (num == 4) || (num == 5) || (num == 6);
         }

@@ -13,10 +13,13 @@ namespace Bomberman
     #region Block Helper
     public static class BlockUtilities
     {
+        /// <summary>
+        /// Get the texture for the block type
+        /// </summary>
+        /// <param name="blockType">The block type</param>
+        /// <returns>The texture for the given block type</returns>
         public static Texture2D GetBlockTypeTexture(BlockType blockType)
         {
-            // Return block textures from a BlockType
-
             switch (blockType)
             {
                 case BlockType.Air: return null;
@@ -30,17 +33,15 @@ namespace Bomberman
             }
         }
 
+        /// <summary>
+        /// Get the block type from a block ID
+        /// </summary>
+        /// <param name="number">Block ID</param>
+        /// <returns>BlockType matching the given ID</returns>
         public static BlockType ConvertToBlockType(int number)
         {
-            // Convert numbers to a BlockType
-
             BlockType[] blockTypes = { BlockType.Air, BlockType.Wall, BlockType.WeakWall, BlockType.Treasure, BlockType.ExitPortal, BlockType.Bomb, BlockType.Smoke };
             return blockTypes[number];
-        }
-
-        public static void UpdateAllBlockTextures()
-        {
-
         }
     }
 
